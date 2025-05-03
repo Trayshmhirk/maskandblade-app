@@ -150,4 +150,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .app_container {
+    @apply w-full max-w-[540px] md:max-w-[720px] lg:max-w-[1024px] xl:max-w-[1280px] mx-auto px-4
+  }
 }

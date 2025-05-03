@@ -1,3 +1,4 @@
+import Header from "@/components/common/Header";
 import React from "react";
 
 const CustomerLayout = ({
@@ -5,7 +6,12 @@ const CustomerLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <Header />
+      {children}
+    </div>
+  );
 };
 
 export default CustomerLayout;

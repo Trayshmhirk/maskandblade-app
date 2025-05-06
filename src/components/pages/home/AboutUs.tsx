@@ -1,68 +1,99 @@
 import Image from "next/image";
 import React from "react";
+import * as motion from "motion/react-client";
+import { fadeIn, slideIn, staggerContainer } from "@/utils/motion";
 
 const AboutUs = () => {
   return (
-    <section id="about" className="bg-[#f9f8f6] py-16 md:py-20">
+    <motion.section
+      id="about"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      variants={staggerContainer()}
+      className="bg-[#f9f8f6] py-16 md:py-20 overflow-hidden"
+    >
       <div className="app_container">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
-          {/* Image Column */}
-          <div className="flex flex-col md:flex-row items-start">
-            <div className="w-full md:w-[70%]">
-              <Image
-                src="/images/clean-shave2.jpeg"
-                alt="about_image"
-                className="w-full h-[400px] md:h-[500px] object-cover"
-                width={400}
-                height={500}
-              />
-            </div>
-            <div className="w-full md:w-[30%] self-end">
-              <Image
-                src="/images/about_small_image.png"
-                alt="about_image"
-                className="w-full h-[400px] md:h-auto p-3 bg-transparent object-contain"
-                width={200}
-                height={400}
-              />
-            </div>
-          </div>
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <motion.div
+            variants={slideIn("left", "tween", 0.2, 1)}
+            className="relative h-[500px] md:h-[600px]"
+          >
+            <Image
+              src="/images/clean-shave2.jpeg"
+              alt="Barber at work"
+              fill
+              className="object-cover rounded-xl shadow-2xl"
+              priority
+            />
+            <motion.div
+              variants={fadeIn("right", "spring", 0.6, 1)}
+              className="absolute -bottom-8 -right-8 hidden md:block"
+            >
+              <div className="relative w-48 h-[325px] p-2 rounded-lg shadow-xl overflow-hidden">
+                <Image
+                  src="/images/about_small_image.png"
+                  alt="Barber tools"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Text Column */}
-          <div className="text-black lg:pt-7">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">About Us</h2>
-            <div className="space-y-4">
-              <p className="text-sm leading-relaxed">
-                A great haircut is more than just a style it&apos;s a symbol
+          <motion.div
+            variants={fadeIn("up", "spring", 0.4, 1)}
+            className="text-black"
+          >
+            <motion.h2
+              variants={fadeIn("up", "spring", 0.2, 1)}
+              className="text-4xl md:text-5xl font-heading mb-6"
+            >
+              Crafting Confidence, One Cut at a Time
+            </motion.h2>
+
+            <motion.div
+              variants={staggerContainer(0.1, 0.2)}
+              className="space-y-4"
+            >
+              <motion.p
+                variants={fadeIn("up", "spring", 0.3, 1)}
+                className="text-lg leading-relaxed"
+              >
+                A great haircut is more than just a style—it&apos;s a symbol
                 that defines us. Haircutting is an art that expresses freedom,
-                it&apos;s more than just trimming hair-it&apos;s a form of
-                self-expression, creativity, and innovation.
-              </p>
-              <p className="text-sm leading-relaxed">
-                We believe in the power of a great haircut to boost confidence
-                and showcase your personality. That&apos;s why we offer classic
-                cuts, modern styles, and premium grooming services tailored to
-                your unique look. Our passion for delivering exceptional service
-                drives us to stay ahead of the latest trends and techniques
-                while honoring the timeless traditions that have defined
-                barbering for generations.
-              </p>
-              <p className="text-sm leading-relaxed">
-                Our experienced barbers take the time to listen to your needs,
-                provide expert advice, and deliver a personalized grooming
-                experience that exceeds expectations. By combining precision,
-                creativity, and passion, we craft styles that not only look
-                great but also make you feel confident and comfortable.
-              </p>
-            </div>
+                creativity, and innovation.
+              </motion.p>
+              <motion.p
+                variants={fadeIn("up", "spring", 0.4, 1)}
+                className="text-lg leading-relaxed"
+              >
+                We believe in the power of a great haircut to boost confidence.
+                Our barbers combine precision with passion to deliver
+                personalized grooming experiences.
+              </motion.p>
+              <motion.p
+                variants={fadeIn("up", "spring", 0.5, 1)}
+                className="text-lg leading-relaxed"
+              >
+                Honoring timeless traditions while embracing modern techniques,
+                we create styles that make you look and feel exceptional.
+              </motion.p>
+            </motion.div>
 
-            <p className="text-xl mt-8">
-              <b>Opening Hours</b> 8:00am - 10:00pm
-            </p>
-          </div>
+            <motion.div
+              variants={fadeIn("up", "spring", 0.6, 1)}
+              className="mt-8 p-6 bg-white rounded-lg shadow-md inline-block"
+            >
+              <p className="text-xl font-medium">
+                <span className="text-accent">Opening Hours:</span> 8:00am -
+                10:00pm
+              </p>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

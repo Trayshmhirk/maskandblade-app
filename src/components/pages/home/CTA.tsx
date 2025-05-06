@@ -1,26 +1,46 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import * as motion from "motion/react-client";
+import { fadeIn, staggerContainer } from "@/utils/motion";
 
 const CTA = () => {
   return (
-    <section className="py-20 bg-[#121212]/80 text-white">
+    <motion.section
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      variants={staggerContainer()}
+      className="relative py-20 text-white"
+    >
+      <div className="absolute inset-0 bg-[#121212]/90 -z-10" />
       <div className="container px-4 mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+        <motion.h2
+          variants={fadeIn("up", "spring", 0.2, 1)}
+          className="text-3xl md:text-4xl font-heading mb-6"
+        >
           Ready for Your Next Great Look?
-        </h2>
-        <p className="text-gray-300 max-w-2xl mx-auto mb-8">
-          Book your appointment today and experience the premium barbering
-          service that keeps our clients coming back.
-        </p>
+        </motion.h2>
 
-        <Link href="/appointment">
-          <Button size="lg" className="bg-accent hover:bg-amber-300 text-black">
-            Book Your Appointment
-          </Button>
-        </Link>
+        <motion.p
+          variants={fadeIn("up", "spring", 0.4, 1)}
+          className="text-gray-300 max-w-2xl mx-auto mb-8 text-lg"
+        >
+          Book your appointment today and experience premium barbering service.
+        </motion.p>
+
+        <motion.div variants={fadeIn("up", "spring", 0.6, 1)}>
+          <Link href="/appointment">
+            <Button
+              size="lg"
+              className="bg-accent hover:bg-amber-300 text-black hover:scale-107"
+            >
+              Book Your Appointment
+            </Button>
+          </Link>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

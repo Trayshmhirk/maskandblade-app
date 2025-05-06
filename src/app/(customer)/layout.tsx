@@ -1,5 +1,6 @@
-import Header from "@/components/common/Header";
 import React from "react";
+import Footer from "@/components/common/Footer";
+import Header from "@/components/common/Header";
 
 const CustomerLayout = ({
   children,
@@ -10,6 +11,7 @@ const CustomerLayout = ({
     <div>
       <Header />
       {children}
+      <Footer />
     </div>
   );
 };

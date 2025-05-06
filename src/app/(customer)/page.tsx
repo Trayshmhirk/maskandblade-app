@@ -1,4 +1,8 @@
 import Hero from "@/components/common/Hero";
+import AboutUs from "@/components/pages/home/AboutUs";
+import CTA from "@/components/pages/home/CTA";
+import Features from "@/components/pages/home/Features";
+import Services from "@/components/pages/home/Services";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
@@ -35,6 +39,11 @@ export default function Home() {
           </Link>
         </div>
       </Hero>
+
+      <AboutUs />
+      <Features />
+      <Services />
+      <CTA />
     </>
   );
 }

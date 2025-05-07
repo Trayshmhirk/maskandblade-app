@@ -1,7 +1,7 @@
-import { NAV_LINKS } from "@/lib/data/nav-links";
-import Link from "next/link";
 import React, { Fragment } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { nav_config } from "@/lib/data/nav-config";
 import { X } from "lucide-react";
 
 interface SidebarProps {
@@ -37,24 +37,36 @@ const Sidebar = ({ isMenuOpen, toggleMenu }: SidebarProps) => {
             </button>
           </div>
           <nav className="flex flex-col space-y-6 p-6">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-white hover:text-accent text-lg transition-colors py-2"
-                onClick={toggleMenu}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Button
-              asChild
+            {nav_config
+              .filter((item) => item.type === "link")
+              .map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-white hover:text-accent text-lg transition-colors py-2"
+                  onClick={toggleMenu}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            {nav_config
+              .filter((item) => item.type === "button")
+              .map((btn) => (
+                <Link key={btn.href} href={btn.href} onClick={toggleMenu}>
+                  <Button
+                    variant="default"
+                    className="mt-4 bg-accent hover:bg-accent/90 text-black py-3 text-lg"
+                  >
+                    {btn.label}
+                  </Button>
+                </Link>
+              ))}
+            {/* <Button
               variant="default"
               className="mt-4 bg-accent hover:bg-accent/90 text-black py-3 text-lg"
-              onClick={toggleMenu}
             >
               <Link href="/appointment">Book Appointment</Link>
-            </Button>
+            </Button> */}
           </nav>
         </div>
       </div>

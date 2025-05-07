@@ -7,7 +7,6 @@ const Contact = () => {
   return (
     <>
       <Hero
-        heroBg="/images/hero_bg.jpg"
         heroMinHeight={"min-h-[60vh]"}
         overlayOpacity={"bg-black/80"}
         className={"items-end pb-12"}

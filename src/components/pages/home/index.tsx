@@ -10,11 +10,7 @@ import Link from "next/link";
 const Home = () => {
   return (
     <>
-      <Hero
-        heroBg="/images/home-hero-bg.jpg"
-        heroMinHeight={"min-h-[80vh]"}
-        overlayOpacity={"bg-black/10"}
-      >
+      <Hero heroMinHeight={"min-h-[80vh]"} overlayOpacity={"bg-black/10"}>
         <div className="max-w-lg">
           <h1 className="text-5xl md:text-7xl font-heading text-white mb-6">
             Unmask Your Best Look.

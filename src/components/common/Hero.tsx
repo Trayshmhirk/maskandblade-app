@@ -1,8 +1,10 @@
-import { cn } from "@/lib/utils";
+"use client";
 import React from "react";
+import { cn } from "@/lib/utils";
+import { getHeroImage } from "@/lib/data/get-hero-image";
+import { usePathname } from "next/navigation";
 
 interface HeroProps {
-  heroBg: string;
   children: React.ReactNode;
   heroMinHeight: string;
   overlayOpacity: string;
@@ -10,12 +12,14 @@ interface HeroProps {
 }
 
 function Hero({
-  heroBg,
   children,
   heroMinHeight,
   overlayOpacity,
   className,
 }: HeroProps) {
+  const pathname = usePathname();
+  const heroBg = getHeroImage(pathname);
+
   const style = {
     backgroundImage: `url(${heroBg})`,
     backgroundSize: "cover",

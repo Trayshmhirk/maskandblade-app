@@ -1,43 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-
-import { MapPin, Clock, Phone } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { MapPin, Clock, Phone } from "lucide-react";
+import { contactSchema } from "@/validation";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+type ContactFormValues = {
+  name: string;
+  email: string;
+  message: string;
+};
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues>({
+    resolver: yupResolver(contactSchema),
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const onSubmit = async (data: ContactFormValues) => {
+    console.log("Form data prepared for Firebase:", data);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+    // ⏱️ Simulate a network delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Form data prepared for Firebase:", formData);
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you within 24 hours.",
-      });
-      setFormData({ name: "", email: "", message: "" });
-      setIsSubmitting(false);
-    }, 1500);
+    toast.success("Message sent successfully!", {
+      description: "We'll get back to you within 24 hours.",
+    });
+    reset();
   };
 
   return (
@@ -49,7 +46,8 @@ const ContactForm = () => {
             <h2 className="text-3xl font-bold mb-8 text-gray-900">
               Get in Touch
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <label
                   htmlFor="name"
@@ -57,15 +55,19 @@ const ContactForm = () => {
                 >
                   Full Name
                 </label>
+
                 <Input
                   id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-fit px-4 py-3 border-gray-300 focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="John Doe"
+                  {...register("name")}
+                  className="w-full h-fit px-4 py-3 border-gray-300 focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
+
+                {errors.name && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.name.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -75,16 +77,20 @@ const ContactForm = () => {
                 >
                   Email Address
                 </label>
+
                 <Input
                   id="email"
-                  name="email"
                   type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-fit px-4 py-3 border-gray-300 focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="your@email.com"
+                  {...register("email")}
+                  className="w-full h-fit px-4 py-3 border-gray-300 focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
+
+                {errors.email && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -96,13 +102,16 @@ const ContactForm = () => {
                 </label>
                 <Textarea
                   id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-fit min-h-[150px] px-4 py-3 border-gray-300 focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="How can we help you?"
+                  {...register("message")}
+                  className="w-full h-fit min-h-[150px] px-4 py-3 border-gray-300 focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
+
+                {errors.message && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.message.message}
+                  </p>
+                )}
               </div>
 
               <Button

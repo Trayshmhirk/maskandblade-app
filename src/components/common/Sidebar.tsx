@@ -61,12 +61,6 @@ const Sidebar = ({ isMenuOpen, toggleMenu }: SidebarProps) => {
                   </Button>
                 </Link>
               ))}
-            {/* <Button
-              variant="default"
-              className="mt-4 bg-accent hover:bg-accent/90 text-black py-3 text-lg"
-            >
-              <Link href="/appointment">Book Appointment</Link>
-            </Button> */}
           </nav>
         </div>
       </div>

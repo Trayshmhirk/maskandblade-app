@@ -80,7 +80,7 @@ const Header = () => {
               <Link key={btn.href} href={btn.href}>
                 <Button
                   variant="default"
-                  className="bg-accent hover:bg-accent/90 text-black"
+                  className="bg-accent hover:bg-amber-300 text-black"
                 >
                   {btn.label}
                 </Button>

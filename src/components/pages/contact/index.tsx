@@ -7,8 +7,8 @@ const Contact = () => {
   return (
     <>
       <Hero
-        heroMinHeight={"min-h-[60vh]"}
-        overlayOpacity={"bg-black/80"}
+        heroMinHeight={"min-h-[65vh]"}
+        overlayOpacity={"bg-black/50"}
         className={"items-end pb-12"}
       >
         <h1 className="relative text-5xl md:text-7xl text-white font-semibold md:max-w-xl mb-6">

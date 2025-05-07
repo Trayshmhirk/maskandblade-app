@@ -10,13 +10,13 @@ export const nav_config = [
     href: "/about",
     label: "About Us",
     type: "link",
-    images: ["/hero/about1.jpg"],
+    images: ["/hero/about1.jpg", "/hero/about2.jpg", "/hero/about3.jpg"],
   },
   {
     href: "/contact",
-    label: "Contact",
+    label: "Contact Us",
     type: "link",
-    images: ["/images/hero_bg.jpg"], // "/hero/contact1.jpg"
+    images: ["/hero/contact1.jpg", "/hero/contact2.jpg"],
   },
   {
     href: "/services",

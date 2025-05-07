@@ -1,5 +1,6 @@
 import Hero from "@/components/common/Hero";
 import React from "react";
+import Story from "./Story";
 
 const About = () => {
   return (
@@ -16,6 +17,8 @@ const About = () => {
           Your premier mobile barbering service
         </p>
       </Hero>
+
+      <Story />
     </>
   );
 };

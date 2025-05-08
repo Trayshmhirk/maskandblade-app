@@ -30,7 +30,7 @@ const Features = () => {
 
   return (
     <section className="py-16 md:py-20 bg-white">
-      <div className="container px-4 mx-auto">
+      <div className="app_container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-heading mb-4">
             Why Choose <span className="text-accent">MaskAndBlade</span>

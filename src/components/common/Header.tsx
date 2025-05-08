@@ -41,7 +41,7 @@ const Header = () => {
 
   return (
     <header
-      className={`bg-secondary-foreground text-white w-full ${
+      className={`bg-primary text-white w-full ${
         isSticky ? "fixed top-0 left-0 z-50 shadow-md" : ""
       }`}
     >
@@ -54,7 +54,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white p-2 cursor-pointer"
+          className="slg:hidden text-white p-2 cursor-pointer"
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
@@ -62,7 +62,7 @@ const Header = () => {
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden slg:flex items-center space-x-6">
           {nav_config
             .filter((item) => item.type === "link")
             .map((link) => (

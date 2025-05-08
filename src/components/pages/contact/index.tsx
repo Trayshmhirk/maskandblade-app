@@ -40,7 +40,7 @@ const Contact = () => {
 
       <section className="py-16 md:py-20 bg-[#f9f8f6]">
         <div className="app_container text-center">
-          <h2 className="text-dark_primary font-bold text-xl mb-8">
+          <h2 className="text-primary font-bold text-xl mb-8">
             Connect With Us on Social Media
           </h2>
 

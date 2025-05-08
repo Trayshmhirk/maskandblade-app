@@ -1,6 +1,7 @@
 import Hero from "@/components/common/Hero";
 import React from "react";
 import Story from "./Story";
+import Meet from "./Meet";
 
 const About = () => {
   return (
@@ -19,6 +20,7 @@ const About = () => {
       </Hero>
 
       <Story />
+      <Meet />
     </>
   );
 };

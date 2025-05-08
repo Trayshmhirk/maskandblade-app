@@ -3,14 +3,14 @@ import Image from "next/image";
 const Story = () => {
   return (
     <section className="py-16 md:py-24 bg-white">
-      <div className="app_container max-w-6xl">
+      <div className="app_container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}
           <div className="order-2 lg:order-1">
             <div className="mb-2 text-sm font-semibold text-accent uppercase tracking-wider">
               Our Heritage
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">
               Crafting Legends,{" "}
               <span className="text-accent">One Cut at a Time</span>
             </h2>

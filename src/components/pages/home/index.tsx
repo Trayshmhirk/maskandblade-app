@@ -21,14 +21,14 @@ const Home = () => {
           </p>
           <div className="flex gap-4">
             <Link href="/appointment">
-              <Button className="h-fit px-6 py-3 text-lg font-semibold bg-accent hover:bg-amber-300 text-black rounded">
+              <Button className="px-6 py-3 text-lg font-semibold bg-accent hover:bg-amber-300 text-black rounded">
                 Book Now
               </Button>
             </Link>
             <Link href="/services">
               <Button
                 variant="outline"
-                className="h-fit px-6 py-3 text-lg font-semibold border-white text-black hover:bg-white hover:text-black rounded"
+                className="px-6 py-3 text-lg font-semibold border-white text-black hover:bg-white hover:text-black rounded"
               >
                 Our Services
               </Button>

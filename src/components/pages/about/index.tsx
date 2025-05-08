@@ -2,6 +2,7 @@ import Hero from "@/components/common/Hero";
 import React from "react";
 import Story from "./Story";
 import Meet from "./Meet";
+import CTA from "./CTA";
 
 const About = () => {
   return (
@@ -21,6 +22,7 @@ const About = () => {
 
       <Story />
       <Meet />
+      <CTA />
     </>
   );
 };

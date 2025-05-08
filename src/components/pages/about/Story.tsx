@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Story = () => {
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-20 bg-white">
       <div className="app_container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}

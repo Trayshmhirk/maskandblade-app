@@ -6,6 +6,7 @@ import Features from "@/components/pages/home/Features";
 import Services from "@/components/pages/home/Services";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import HowItWorks from "./HowItWorks";
 
 const Home = () => {
   return (
@@ -39,6 +40,7 @@ const Home = () => {
 
       <AboutUs />
       <Features />
+      <HowItWorks />
       <Services />
       <CTA />
     </>

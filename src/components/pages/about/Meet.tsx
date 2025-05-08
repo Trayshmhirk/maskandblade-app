@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Meet = () => {
   return (
-    <section className="py-16 md:py-24 bg-gray-100">
+    <section className="py-16 md:py-20 bg-gray-100">
       <div className="app_container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Image - Showcase barber team */}
@@ -53,7 +53,7 @@ const Meet = () => {
             </div>
 
             <div className="mt-8">
-              <Button className="px-6 py-3 bg-accent hover:bg-accent/90 text-black font-medium rounded-lg transition-colors">
+              <Button className="px-6 py-3 bg-accent hover:bg-amber-300 text-black font-medium rounded-lg transition-colors">
                 Meet The Team
               </Button>
             </div>

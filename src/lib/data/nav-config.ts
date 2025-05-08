@@ -22,7 +22,11 @@ export const nav_config = [
     href: "/services",
     label: "Services",
     type: "link",
-    images: ["/hero/services1.jpg", "/hero/services2.jpg"],
+    images: [
+      "/hero/services1.jpg",
+      "/hero/services2.jpg",
+      "/hero/services3.jpg",
+    ],
   },
   {
     href: "/gallery",

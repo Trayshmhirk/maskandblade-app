@@ -1,6 +1,7 @@
 import Hero from "@/components/common/Hero";
 import React from "react";
 import ServicesOffered from "./ServicesOffered";
+import CTA from "./CTA";
 
 const Services = () => {
   return (
@@ -21,6 +22,7 @@ const Services = () => {
       </Hero>
 
       <ServicesOffered />
+      <CTA />
     </>
   );
 };

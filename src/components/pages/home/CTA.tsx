@@ -4,9 +4,7 @@ import Link from "next/link";
 
 const CTA = () => {
   return (
-    <section className="relative py-20 text-white">
-      <div className="absolute inset-0 bg-[#121212]/90 -z-10" />
-
+    <section className="py-20 bg-[#121212]/80 text-white">
       <div className="app_container text-center">
         <h2 className="text-3xl md:text-4xl font-heading mb-6">
           Ready for Your Next Great Look?

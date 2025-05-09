@@ -38,6 +38,10 @@ export const nav_config = [
     href: "/appointment",
     label: "Book Appointment",
     type: "button",
-    images: ["/hero/appointment1.jpg", "/hero/appointment2.jpg"],
+    images: [
+      "/hero/appointment1.jpg",
+      "/hero/appointment2.jpg",
+      "/hero/appointment3.jpg",
+    ],
   },
 ];

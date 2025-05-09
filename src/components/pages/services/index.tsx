@@ -1,12 +1,13 @@
 import Hero from "@/components/common/Hero";
 import React from "react";
+import ServicesOffered from "./ServicesOffered";
 
 const Services = () => {
   return (
     <>
       <Hero
         heroMinHeight={"min-h-[75vh]"}
-        overlayOpacity={"bg-black/50"}
+        overlayOpacity={"bg-black/40"}
         backgroundPosition="center -100px"
         className={"items-end pb-12"}
       >
@@ -18,6 +19,8 @@ const Services = () => {
           you looking sharp.
         </p>
       </Hero>
+
+      <ServicesOffered />
     </>
   );
 };

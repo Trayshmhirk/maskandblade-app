@@ -4,44 +4,48 @@ export const nav_config = [
     href: "/",
     label: "Home",
     type: "link",
-    images: ["/images/home-hero-bg.jpg"], // "/hero/home2.jpg"
+    images: ["/images/home-hero-bg.jpg"], // "/images/hero/home2.jpg"
   },
   {
     href: "/about",
     label: "About Us",
     type: "link",
-    images: ["/hero/about1.jpg", "/hero/about2.jpg", "/hero/about3.jpg"],
+    images: [
+      "/images/hero/about1.jpg",
+      "/images/hero/about2.jpg",
+      "/images/hero/about3.jpg",
+    ],
   },
   {
     href: "/contact",
     label: "Contact Us",
     type: "link",
-    images: ["/hero/contact1.jpg", "/hero/contact2.jpg"],
+    images: ["/images/hero/contact1.jpg", "/images/hero/contact2.jpg"],
   },
   {
     href: "/services",
     label: "Services",
     type: "link",
     images: [
-      "/hero/services1.jpg",
-      "/hero/services2.jpg",
-      "/hero/services3.jpg",
+      "/images/hero/services1.jpg",
+      "/images/hero/services2.jpg",
+      "/images/hero/services3.jpg",
     ],
   },
   {
     href: "/gallery",
     label: "Gallery",
     type: "link",
-    images: ["/hero/gallery1.jpg"],
+    images: ["/images/hero/gallery1.jpg"],
   },
   {
     href: "/appointment",
     label: "Book Appointment",
     type: "button",
     images: [
-      "/hero/appointment1.jpg",
-      "/hero/appointment2.jpg",
-      "/hero/appointment3.jpg",
+      "/images/hero/appointment1.jpg",
+      "/images/hero/appointment2.jpg",
+      "/images/hero/appointment3.jpg",
     ],
   },
 ];

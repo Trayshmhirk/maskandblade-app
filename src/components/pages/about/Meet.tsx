@@ -48,7 +48,7 @@ const Meet = () => {
               <p className="text-lg text-gray-600 leading-relaxed">
                 Rigorously trained in precision cutting, skin fades, and beard
                 artistry, our team stays ahead through continuous education in
-                the latest barbering innovations.
+                the latest grooming innovations.
               </p>
             </div>
 

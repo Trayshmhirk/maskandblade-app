@@ -16,7 +16,7 @@ const Services = () => {
           Our Services
         </h1>
         <p className="text-white text-2xl font-semibold max-w-xl mb-8">
-          We offer a comprehensive range of premium barbering services to keep
+          We offer a comprehensive range of premium grooming services to keep
           you looking sharp.
         </p>
       </Hero>

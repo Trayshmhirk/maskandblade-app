@@ -16,7 +16,7 @@ const About = () => {
           About <span className="text-amber-300">MaskAndBlade</span>
         </h1>
         <p className="text-white text-2xl font-semibold max-w-xl mb-8">
-          Your premier mobile barbering service
+          Your premier mobile grooming service
         </p>
       </Hero>
 

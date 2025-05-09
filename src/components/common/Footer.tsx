@@ -39,7 +39,7 @@ const Footer = () => {
 
   // Add this object somewhere in your component
   const linkDescriptions: any = {
-    Home: "Discover our barbering philosophy",
+    Home: "Discover our grooming philosophy",
     Services: "Explore our premium offerings",
     About: "Our story and master barbers",
     Gallery: "See our transformative work",

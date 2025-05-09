@@ -11,7 +11,7 @@ const CTA = () => {
         </h2>
 
         <p className="text-gray-300 max-w-2xl mx-auto mb-8 text-lg">
-          Book your appointment today and experience premium barbering service.
+          Book your appointment today and experience premium grooming service.
         </p>
 
         <div>

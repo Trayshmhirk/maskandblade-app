@@ -17,7 +17,7 @@ const Home = () => {
             Unmask Your Best Look.
           </h1>
           <p className="text-white text-xl md:text-2xl mb-8">
-            Experience barbering at its finest - where traditional craftsmanship
+            Experience grooming at its finest - where traditional craftsmanship
             meets modern trends.
           </p>
           <div className="flex gap-4">

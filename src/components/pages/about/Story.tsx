@@ -18,10 +18,10 @@ const Story = () => {
             <div className="space-y-5">
               <p className="text-lg text-gray-600 leading-relaxed">
                 Founded in 2023, MaskAndBlade emerged from a simple vision: to
-                redefine men&apos;s grooming by blending old-world barbering
+                redefine men&apos;s grooming by blending old-world grooming
                 traditions with contemporary style. What began as a single chair
                 in Lagos has grown into Nigeria&apos;s most sought-after
-                barbering experience.
+                grooming experience.
               </p>
 
               <p className="text-lg text-gray-600 leading-relaxed">

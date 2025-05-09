@@ -39,7 +39,7 @@ const Features = () => {
           <div className="mx-auto w-24 h-1 bg-accent mb-6" />
 
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            We combine traditional barbering techniques with modern styles for
+            We combine traditional grooming techniques with modern styles for
             your perfect look.
           </p>
         </div>

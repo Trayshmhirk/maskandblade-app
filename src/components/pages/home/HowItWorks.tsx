@@ -36,7 +36,7 @@ const HowItWorks = () => {
           </h2>
           <div className="mx-auto h-1 w-24 bg-accent mb-6" />
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Premium barbering delivered to your doorstep in three simple steps
+            Premium grooming delivered to your doorstep in three simple steps
           </p>
         </div>
 

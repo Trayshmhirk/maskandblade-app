@@ -65,10 +65,10 @@ const ServicesOffered = () => {
             ?.services.map((service) => (
               <div
                 key={service.id}
-                className="relative bg-white border-2 border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
+                className="relative bg-white border-2 border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col"
               >
                 {/* Service Image */}
-                <div className="relative h-60">
+                <div className="relative h-60 w-full">
                   <Image
                     src={`${service.image}`}
                     alt={service.name}
@@ -84,7 +84,7 @@ const ServicesOffered = () => {
                 </div>
 
                 {/* Service Info */}
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-1">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold">{service.name}</h3>
                     <span className="text-accent font-bold">
@@ -94,7 +94,8 @@ const ServicesOffered = () => {
 
                   <p className="text-gray-600 mb-4">{service.description}</p>
 
-                  <div className="flex justify-between items-center">
+                  {/* Bottom row pushed to bottom */}
+                  <div className="flex justify-between items-center mt-auto pt-2">
                     <span className="text-sm text-gray-500">
                       {service.duration}
                     </span>

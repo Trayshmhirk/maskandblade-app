@@ -1,5 +1,6 @@
 import React from "react";
 import Hero from "@/components/common/Hero";
+import BookingForm from "./BookingForm";
 
 const Appointment = () => {
   return (
@@ -16,6 +17,8 @@ const Appointment = () => {
           Schedule your premium grooming experience with us today.
         </p>
       </Hero>
+
+      <BookingForm />
     </>
   );
 };

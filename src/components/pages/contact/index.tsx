@@ -7,8 +7,8 @@ const Contact = () => {
   return (
     <>
       <Hero
-        heroMinHeight={"min-h-[60vh]"}
-        overlayOpacity={"bg-black/80"}
+        heroMinHeight={"min-h-[65vh]"}
+        overlayOpacity={"bg-black/50"}
         className={"items-end pb-12"}
       >
         <h1 className="relative text-5xl md:text-7xl text-white font-semibold md:max-w-xl mb-6">
@@ -40,7 +40,7 @@ const Contact = () => {
 
       <section className="py-16 md:py-20 bg-[#f9f8f6]">
         <div className="app_container text-center">
-          <h2 className="text-dark_primary font-bold text-xl mb-8">
+          <h2 className="text-primary font-bold text-xl mb-8">
             Connect With Us on Social Media
           </h2>
 

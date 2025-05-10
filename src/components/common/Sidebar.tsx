@@ -24,9 +24,9 @@ const Sidebar = ({ isMenuOpen, toggleMenu }: SidebarProps) => {
       <div
         className={`fixed inset-y-0 left-0 z-50 w-4/5 max-w-[300px] transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out md:hidden`}
+        } transition-transform duration-300 ease-in-out slg:hidden`}
       >
-        <div className="h-full bg-[#121212] shadow-lg">
+        <div className="h-full bg-primary shadow-lg">
           <div className="flex justify-end p-4">
             <button
               className="text-white p-2 cursor-pointer"

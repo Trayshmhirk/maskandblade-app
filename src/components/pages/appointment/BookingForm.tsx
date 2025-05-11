@@ -1,6 +1,10 @@
 "use client";
+
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { bookingSchema } from "@/validation";
 
 const flattenServices = () =>
   serviceData.flatMap((category: any) =>
@@ -27,17 +32,26 @@ const flattenServices = () =>
 const BookingForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const defaultServiceId = searchParams.get("serviceId") || "";
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    date: "",
-    time: "",
-    location: "",
-    serviceId: searchParams.get("serviceId") || "",
-    hairstyleImageUrl: "",
-    notes: "",
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm({
+    resolver: yupResolver(bookingSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      date: "",
+      time: "",
+      location: "",
+      serviceId: defaultServiceId,
+      notes: "",
+    },
   });
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -45,30 +59,15 @@ const BookingForm = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const formData = watch(); // watch form values for payment details
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedImage(e.target.files[0]);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!formData.email) {
-      toast.error("Email is required");
-      return;
-    }
-
+  const onValid = () => {
     setShowPaymentModal(true);
   };
 
@@ -89,7 +88,6 @@ const BookingForm = () => {
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
       console.log("Appointment data:", appointmentData);
       console.log("Payment receipt:", paymentReceipt);
       console.log("Reference image:", selectedImage);
@@ -119,7 +117,8 @@ const BookingForm = () => {
                 Your Appointment Details
               </h2>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onValid)} noValidate>
+                {/* Name */}
                 <div className="mb-4">
                   <label
                     htmlFor="name"
@@ -128,16 +127,18 @@ const BookingForm = () => {
                     Full Name
                   </label>
                   <Input
+                    {...register("name")}
                     id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
                     placeholder="Enter your full name"
-                    className="w-full"
                   />
+                  {errors.name && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.name.message}
+                    </p>
+                  )}
                 </div>
 
+                {/* Email */}
                 <div className="mb-4">
                   <label
                     htmlFor="email"
@@ -146,17 +147,19 @@ const BookingForm = () => {
                     Email Address
                   </label>
                   <Input
+                    {...register("email")}
                     id="email"
-                    name="email"
                     type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="Enter your email address"
-                    className="w-full"
+                    placeholder="Enter your email"
                   />
+                  {errors.email && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
 
+                {/* Phone */}
                 <div className="mb-4">
                   <label
                     htmlFor="phone"
@@ -165,17 +168,19 @@ const BookingForm = () => {
                     Phone Number
                   </label>
                   <Input
+                    {...register("phone")}
                     id="phone"
-                    name="phone"
                     type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
                     placeholder="Enter your phone number"
-                    className="w-full"
                   />
+                  {errors.phone && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.phone.message}
+                    </p>
+                  )}
                 </div>
 
+                {/* Date and Time */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label
@@ -185,15 +190,16 @@ const BookingForm = () => {
                       Preferred Date
                     </label>
                     <Input
+                      {...register("date")}
                       id="date"
-                      name="date"
                       type="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      required
-                      className="w-full"
                       min={new Date().toISOString().split("T")[0]}
                     />
+                    {errors.date && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {errors.date.message}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -203,18 +209,16 @@ const BookingForm = () => {
                     >
                       Preferred Time
                     </label>
-                    <Input
-                      id="time"
-                      name="time"
-                      type="time"
-                      value={formData.time}
-                      onChange={handleChange}
-                      required
-                      className="w-full"
-                    />
+                    <Input {...register("time")} id="time" type="time" />
+                    {errors.time && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {errors.time.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
+                {/* Service Select */}
                 <div className="mb-4">
                   <label
                     htmlFor="serviceId"
@@ -223,26 +227,39 @@ const BookingForm = () => {
                     Service
                   </label>
 
-                  <Select
-                    value={formData.serviceId}
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({ ...prev, serviceId: value }))
-                    }
-                  >
-                    <SelectTrigger id="serviceId" className="w-full h-10">
-                      <SelectValue placeholder="Choose a service" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {flattenServices().map((service) => (
-                        <SelectItem key={service.id} value={String(service.id)}>
-                          {service.categoryName} - {service.name} (
-                          {service.price})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Controller
+                    control={control}
+                    name="serviceId"
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full h-10">
+                          <SelectValue placeholder="Choose a service" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {flattenServices().map((service) => (
+                            <SelectItem
+                              key={service.id}
+                              value={String(service.id)}
+                            >
+                              {service.categoryName} - {service.name} (
+                              {service.price})
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  {errors.serviceId && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.serviceId.message}
+                    </p>
+                  )}
                 </div>
 
+                {/* Image Upload */}
                 <div className="mb-4">
                   <label
                     htmlFor="hairstyle"
@@ -252,17 +269,16 @@ const BookingForm = () => {
                   </label>
                   <Input
                     id="hairstyle"
-                    name="hairstyle"
                     type="file"
                     accept="image/*"
-                    onChange={handleImageChange}
-                    className="w-full"
+                    onChange={onImageChange}
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Upload an image of the style you&apos;d like to achieve
                   </p>
                 </div>
 
+                {/* Location */}
                 <div className="mb-4">
                   <label
                     htmlFor="location"
@@ -271,16 +287,18 @@ const BookingForm = () => {
                     Location
                   </label>
                   <Input
+                    {...register("location")}
                     id="location"
-                    name="location"
-                    value={formData.location}
-                    onChange={handleChange}
-                    required
                     placeholder="Enter your location"
-                    className="w-full"
                   />
+                  {errors.location && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.location.message}
+                    </p>
+                  )}
                 </div>
 
+                {/* Notes */}
                 <div className="mb-6">
                   <label
                     htmlFor="notes"
@@ -289,15 +307,13 @@ const BookingForm = () => {
                     Additional Notes (optional)
                   </label>
                   <Textarea
+                    {...register("notes")}
                     id="notes"
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                    placeholder="Any specific requests or information we should know"
-                    className="w-full min-h-[100px]"
+                    placeholder="Any specific requests?"
                   />
                 </div>
 
+                {/* Submit */}
                 <Button
                   type="submit"
                   className="w-full bg-accent hover:bg-amber-300 text-black"

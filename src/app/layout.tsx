@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,9 +31,11 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} font-inter ${bebasNeue.variable} font-bebas-neue`}
     >
-      <body className="font-sans">
-        <Toaster richColors position="top-right" />
-        {children}
+      <body cz-shortcut-listen="false">
+        <Suspense>
+          <Toaster richColors position="top-right" />
+          {children}
+        </Suspense>
       </body>
     </html>
   );

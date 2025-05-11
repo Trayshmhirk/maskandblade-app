@@ -41,20 +41,22 @@ const Header = () => {
 
   return (
     <header
-      className={`bg-secondary-foreground text-white w-full ${
+      className={`bg-primary text-white w-full ${
         isSticky ? "fixed top-0 left-0 z-50 shadow-md" : ""
       }`}
     >
       <div className="app_container flex justify-between items-center h-16">
         <Link href="/" className="flex items-center">
-          <div className="text-xl md:text-2xl font-display font-bold text-barber-gold">
-            MASKANDBLADE
-          </div>
+          <h3 className="text-xl md:text-2xl font-bold">
+            <span className="text-accent">MASK</span>
+            <span className="text-white">AND</span>
+            <span className="text-accent">BLADE</span>
+          </h3>
         </Link>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white p-2 cursor-pointer"
+          className="slg:hidden text-white p-2 cursor-pointer"
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
@@ -62,7 +64,7 @@ const Header = () => {
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden slg:flex items-center space-x-6">
           {nav_config
             .filter((item) => item.type === "link")
             .map((link) => (

@@ -30,7 +30,7 @@ const Features = () => {
 
   return (
     <section className="py-16 md:py-20 bg-white">
-      <div className="container px-4 mx-auto">
+      <div className="app_container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-heading mb-4">
             Why Choose <span className="text-accent">MaskAndBlade</span>
@@ -39,7 +39,7 @@ const Features = () => {
           <div className="mx-auto w-24 h-1 bg-accent mb-6" />
 
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            We combine traditional barbering techniques with modern styles for
+            We combine traditional grooming techniques with modern styles for
             your perfect look.
           </p>
         </div>

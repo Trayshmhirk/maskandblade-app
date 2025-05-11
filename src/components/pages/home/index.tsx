@@ -6,6 +6,7 @@ import Features from "@/components/pages/home/Features";
 import Services from "@/components/pages/home/Services";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import HowItWorks from "./HowItWorks";
 
 const Home = () => {
   return (
@@ -16,19 +17,19 @@ const Home = () => {
             Unmask Your Best Look.
           </h1>
           <p className="text-white text-xl md:text-2xl mb-8">
-            Experience barbering at its finest - where traditional craftsmanship
+            Experience grooming at its finest - where traditional craftsmanship
             meets modern trends.
           </p>
           <div className="flex gap-4">
             <Link href="/appointment">
-              <Button className="h-fit px-6 py-3 text-lg font-semibold bg-accent hover:bg-amber-300 text-black rounded">
+              <Button className="px-6 py-3 text-lg font-semibold bg-accent hover:bg-amber-300 text-black rounded">
                 Book Now
               </Button>
             </Link>
             <Link href="/services">
               <Button
                 variant="outline"
-                className="h-fit px-6 py-3 text-lg font-semibold border-white text-black hover:bg-white hover:text-black rounded"
+                className="px-6 py-3 text-lg font-semibold border-white text-black hover:bg-white hover:text-black rounded"
               >
                 Our Services
               </Button>
@@ -39,6 +40,7 @@ const Home = () => {
 
       <AboutUs />
       <Features />
+      <HowItWorks />
       <Services />
       <CTA />
     </>

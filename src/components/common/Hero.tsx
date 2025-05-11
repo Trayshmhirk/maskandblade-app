@@ -8,6 +8,7 @@ interface HeroProps {
   children: React.ReactNode;
   heroMinHeight: string;
   overlayOpacity: string;
+  backgroundPosition?: string;
   className?: string;
 }
 
@@ -15,6 +16,7 @@ function Hero({
   children,
   heroMinHeight,
   overlayOpacity,
+  backgroundPosition = "center",
   className,
 }: HeroProps) {
   const pathname = usePathname();
@@ -23,8 +25,9 @@ function Hero({
   const style = {
     backgroundImage: `url(${heroBg})`,
     backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundPosition: backgroundPosition,
     backgroundAttachment: `fixed`,
+    backgroundRepeat: "no-repeat",
     height: "100%",
     width: "100%",
   };

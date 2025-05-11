@@ -42,7 +42,7 @@ const NotFound = () => {
       <Button
         onClick={handleGoBack}
         role="link"
-        className="h-fit bg-accent hover:bg-amber-300 text-black py-3 px-7 font-semibold text-sm mt-9"
+        className="bg-accent hover:bg-amber-300 text-black py-3 px-7 font-semibold text-sm mt-9"
       >
         Back Home
       </Button>

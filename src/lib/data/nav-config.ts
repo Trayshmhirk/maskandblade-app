@@ -4,7 +4,7 @@ export const nav_config = [
     href: "/",
     label: "Home",
     type: "link",
-    images: ["/images/home-hero-bg.jpg"], // "/images/hero/home2.jpg"
+    images: ["/images/hero/home-hero-bg.jpg"], // "/images/hero/home2.jpg"
   },
   {
     href: "/about",
@@ -36,7 +36,7 @@ export const nav_config = [
     href: "/gallery",
     label: "Gallery",
     type: "link",
-    images: ["/images/hero/gallery1.jpg"],
+    images: ["/images/hero/gallery1.jpg", "/images/hero/gallery2.jpg"],
   },
   {
     href: "/appointment",

@@ -6,7 +6,7 @@ const Gallery = () => {
   return (
     <>
       <Hero
-        heroMinHeight={"min-h-[60vh]"}
+        heroMinHeight={"min-h-[70vh]"}
         overlayOpacity={"bg-black/50"}
         className={"items-end pb-12"}
       >

@@ -58,7 +58,7 @@ const PaymentModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[85vh] flex flex-col overflow-hidden">
+      <DialogContent className="sm:max-w-[calc(100%-3rem)] smd:max-w-lg md:max-w-[600px] max-h-[85vh] flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold mb-2">
             Complete Your Booking

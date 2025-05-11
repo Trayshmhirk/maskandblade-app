@@ -111,10 +111,21 @@ const BookingForm = () => {
         <SuccessMessage onReturnHome={() => router.push("/")} />
       ) : (
         <section className="py-16 md:py-20 bg-gray-50">
-          <div className="container px-4 mx-auto max-w-2xl">
-            <div className="bg-white p-8 border rounded-lg shadow-md">
-              <h2 className="text-2xl font-bold mb-6 text-center">
-                Your Appointment Details
+          <div className="app_container">
+            {/* Header */}
+            <div className="text-center mb-10">
+              <h1 className="text-3xl md:text-4xl font-heading mb-4 text-primary">
+                Book Your <span className="text-accent">Appointment</span>
+              </h1>
+              <div className="mx-auto h-1 w-24 bg-accent mb-6" />
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Reserve your spot for premium grooming services
+              </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto bg-white p-8 border border-gray-200 rounded-lg shadow-md">
+              <h2 className="text-lg md:text-2xl font-bold mb-6 text-center">
+                Personal & Appointment Details
               </h2>
 
               <form onSubmit={handleSubmit(onValid)} noValidate>

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 // Extracted Success Message component
 const SuccessMessage = ({ onReturnHome }: { onReturnHome: () => void }) => (
   <section className="py-16 md:py-20 bg-gray-50">
-    <div className="min-h-[60vh] flex items-center justify-center">
+    <div className="app_container min-h-[40vh] flex items-center justify-center">
       <div className="bg-white p-8 border rounded-lg shadow-lg max-w-md w-full text-center">
         <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-green-100 mb-6">
           <svg
@@ -30,9 +30,9 @@ const SuccessMessage = ({ onReturnHome }: { onReturnHome: () => void }) => (
 
         <Button
           onClick={onReturnHome}
-          className="bg-barber-gold hover:bg-amber-400 text-black"
+          className="bg-accent hover:bg-amber-300 text-black"
         >
-          Return to Home
+          Return Home
         </Button>
       </div>
     </div>

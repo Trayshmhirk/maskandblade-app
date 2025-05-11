@@ -47,9 +47,11 @@ const Header = () => {
     >
       <div className="app_container flex justify-between items-center h-16">
         <Link href="/" className="flex items-center">
-          <div className="text-xl md:text-2xl font-display font-bold text-barber-gold">
-            MASKANDBLADE
-          </div>
+          <h3 className="text-xl md:text-2xl font-bold">
+            <span className="text-accent">MASK</span>
+            <span className="text-white">AND</span>
+            <span className="text-accent">BLADE</span>
+          </h3>
         </Link>
 
         {/* Mobile Menu Button */}

@@ -10,19 +10,19 @@ const Services = () => {
       title: "Haircut & Fade",
       description:
         "Expert haircut with perfect fading technique, customized to your style.",
-      image: "/images/service1.jpg",
+      image: "/images/services/service1.jpg",
     },
     {
       title: "Beard Trim & Styling",
       description:
         "Professional beard trimming and styling to enhance your facial features.",
-      image: "/images/service2.jpg",
+      image: "/images/services/service2.jpg",
     },
     {
       title: "Hot Towel Shave",
       description:
         "Luxurious classic hot towel shave for the ultimate relaxation experience.",
-      image: "/images/service3.jpg",
+      image: "/images/services/service3.jpg",
     },
   ];
 

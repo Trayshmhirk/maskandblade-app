@@ -25,7 +25,7 @@ export const serviceCategories = [
         duration: "60 mins",
         details:
           "Expert blending from skin to longer lengths with crisp line work. Choose from low, mid, or high fade styles with detailed edge work.",
-        image: "/images/service1.jpg",
+        image: "/images/services/service1.jpg",
       },
       {
         id: 3,
@@ -110,7 +110,7 @@ export const serviceCategories = [
         details:
           "Our ultimate package: haircut with fade, beard sculpt, hot towel treatment, straight razor edge cleanup, and premium styling products.",
         badge: "Best Value",
-        image: "/images/service1.jpg",
+        image: "/images/services/service1.jpg",
       },
       {
         id: 7,
@@ -120,7 +120,7 @@ export const serviceCategories = [
         duration: "45 mins",
         details:
           "Efficient haircut and beard tidy-up designed to maintain your look between full services. Includes quick style and product application.",
-        image: "/images/service1.jpg",
+        image: "/images/services/service1.jpg",
       },
       {
         id: 11,
@@ -130,7 +130,7 @@ export const serviceCategories = [
         duration: "100 mins",
         details:
           "Haircut and beard services followed by a relaxing in-chair massage using essential oils. Designed to ease tension and elevate your experience.",
-        image: "/images/service1.jpg",
+        image: "/images/services/service1.jpg",
       },
       {
         id: 12,
@@ -141,7 +141,7 @@ export const serviceCategories = [
         details:
           "Enjoy priority booking, a dedicated barber, and four visits per month. Perfect for professionals who need consistency and convenience.",
         badge: "Premium",
-        image: "/images/service1.jpg",
+        image: "/images/services/service1.jpg",
       },
     ],
   },

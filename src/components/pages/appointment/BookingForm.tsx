@@ -229,7 +229,7 @@ const BookingForm = () => {
                       setFormData((prev) => ({ ...prev, serviceId: value }))
                     }
                   >
-                    <SelectTrigger className="w-full h-10">
+                    <SelectTrigger id="serviceId" className="w-full h-10">
                       <SelectValue placeholder="Choose a service" />
                     </SelectTrigger>
                     <SelectContent>

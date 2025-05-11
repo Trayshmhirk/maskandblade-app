@@ -234,8 +234,8 @@ const BookingForm = () => {
                     </SelectTrigger>
                     <SelectContent>
                       {flattenServices().map((service) => (
-                        <SelectItem key={service.id} value={service.id}>
-                          {service.categoryName} – {service.name} (
+                        <SelectItem key={service.id} value={String(service.id)}>
+                          {service.categoryName} - {service.name} (
                           {service.price})
                         </SelectItem>
                       ))}
@@ -323,6 +323,7 @@ const BookingForm = () => {
         onClose={() => setShowPaymentModal(false)}
         bookingDetails={formData}
         onConfirm={handleCompleteBooking}
+        isSubmitting={isSubmitting}
       />
     </>
   );

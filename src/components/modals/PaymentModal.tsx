@@ -11,23 +11,33 @@ import { Button } from "../ui/button";
 import { Upload, Check, CreditCard, User } from "lucide-react";
 import { toast } from "sonner";
 import Image from "next/image";
+import { serviceCategories } from "@/lib/data/serviceCategories";
 
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   bookingDetails: any;
   onConfirm: (receipt?: File | null) => void;
+  isSubmitting: boolean; // NEW
 }
+
 const PaymentModal = ({
   isOpen,
   onClose,
   bookingDetails,
   onConfirm,
+  isSubmitting,
 }: PaymentModalProps) => {
   const [receipt, setReceipt] = useState<File | null>(null);
   const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("bank");
+
+  const getServiceName = (id: string | number) => {
+    const foundService = serviceCategories
+      .flatMap((cat) => cat.services)
+      .find((service) => String(service.id) === String(id));
+    return foundService?.name || "Unknown Service";
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -42,24 +52,8 @@ const PaymentModal = ({
     }
   };
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-
-    try {
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Call the parent confirm handler with the receipt
-      onConfirm(receipt);
-
-      toast.success("Booking completed!");
-      onClose();
-    } catch (err) {
-      console.error("Booking error:", err);
-      toast.error("There was an error processing your booking.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handleSubmit = () => {
+    onConfirm(receipt); // Just call the parent handler
   };
 
   return (
@@ -114,7 +108,7 @@ const PaymentModal = ({
 
               <div className="flex justify-between gap-2">
                 <p className="font-medium">Service:</p>
-                <p>{bookingDetails.service}</p>
+                <p>{getServiceName(bookingDetails.serviceId)}</p>
               </div>
 
               <div className="flex justify-between gap-2">

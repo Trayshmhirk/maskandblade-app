@@ -321,6 +321,7 @@ const BookingForm = () => {
                     {...register("notes")}
                     id="notes"
                     placeholder="Any specific requests?"
+                    className="w-full min-h-[120px]"
                   />
                 </div>
 

@@ -69,6 +69,7 @@ const PaymentModal = ({
           <DialogTitle className="text-2xl font-bold mb-2">
             Complete Your Booking
           </DialogTitle>
+
           <p className="text-muted-foreground">
             Choose your payment method to confirm your booking
           </p>
@@ -80,6 +81,7 @@ const PaymentModal = ({
             <h3 className="font-medium text-lg mb-3 pb-2 border-b">
               Booking Summary
             </h3>
+
             <div className="flex flex-col gap-2 text-sm">
               <div className="flex justify-between gap-2">
                 <p className="font-medium">Name:</p>
@@ -90,6 +92,7 @@ const PaymentModal = ({
                 <p className="font-medium">Email:</p>
                 <p>{bookingDetails.email}</p>
               </div>
+
               <div className="flex justify-between gap-2">
                 <p className="font-medium">Phone:</p>
                 <p>{bookingDetails.phone}</p>
@@ -108,23 +111,15 @@ const PaymentModal = ({
                 <p className="font-medium">Time:</p>
                 <p>{bookingDetails.time}</p>
               </div>
+
               <div className="flex justify-between gap-2">
                 <p className="font-medium">Service:</p>
                 <p>{bookingDetails.service}</p>
               </div>
+
               <div className="flex justify-between gap-2">
                 <p className="font-medium">Location:</p>
                 <p>{bookingDetails.location}</p>
-              </div>
-              <div className="flex justify-between gap-2">
-                <p className="font-medium">Sample:</p>
-                <Image
-                  src={bookingDetails.hairstyleImageUrl}
-                  width={50}
-                  height={50}
-                  alt="haistyle"
-                  className="size-[50px]"
-                />
               </div>
 
               {bookingDetails.notes && (
@@ -144,7 +139,7 @@ const PaymentModal = ({
                 type="button"
                 className={`border rounded-lg p-4 text-center transition-colors ${
                   paymentMethod === "bank"
-                    ? "border-barber-gold bg-amber-50"
+                    ? "border-accent/50 bg-accent/5 "
                     : "border-gray-300 hover:border-gray-400"
                 }`}
                 onClick={() => setPaymentMethod("bank")}
@@ -152,11 +147,12 @@ const PaymentModal = ({
                 <CreditCard className="h-6 w-6 mx-auto mb-2" />
                 <span className="font-medium">Bank Transfer</span>
               </button>
+
               <button
                 type="button"
                 className={`border rounded-lg p-4 text-center transition-colors ${
                   paymentMethod === "person"
-                    ? "border-barber-gold bg-amber-50"
+                    ? "border-accent/50 bg-accent/5 "
                     : "border-gray-300 hover:border-gray-400"
                 }`}
                 onClick={() => setPaymentMethod("person")}
@@ -170,22 +166,22 @@ const PaymentModal = ({
           {/* Bank Payment Details (shown only when bank transfer selected) */}
           {paymentMethod === "bank" && (
             <>
-              <div className="border border-barber-gold bg-amber-50 p-4 rounded-lg">
+              <div className="border border-accent/50 bg-accent/5  p-4 rounded-lg">
                 <h3 className="font-medium text-lg mb-3 pb-2 border-b border-amber-200">
                   Bank Payment Details
                 </h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="font-medium">Account Name:</span>
-                    <span className="font-bold">Agunbiade T. Bidemi</span>
+                    <span className="font-bold">MaskAndBlade</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Account Number:</span>
-                    <span className="font-bold">2018210837</span>
+                    <span className="font-bold">01234567890</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Bank Name:</span>
-                    <span className="font-bold">Kuda Microfinance Bank</span>
+                    <span className="font-bold">Bank of Africa</span>
                   </div>
                 </div>
               </div>
@@ -225,8 +221,8 @@ const PaymentModal = ({
                       <Image
                         src={receiptPreview}
                         alt="Receipt Preview"
-                        className="max-h-[200px] mx-auto rounded-md"
-                        width={400}
+                        className="w-[200px] max-h-[300px] mx-auto rounded-md object-cover"
+                        width={200}
                         height={200}
                       />
                     ) : (
@@ -235,10 +231,11 @@ const PaymentModal = ({
                         <p className="mt-2">PDF Receipt Uploaded</p>
                       </div>
                     )}
+
                     <Button
                       variant="outline"
                       size="sm"
-                      className="mt-2"
+                      className="hover:bg-gray-200 mt-2"
                       onClick={() => {
                         setReceipt(null);
                         setReceiptPreview(null);
@@ -254,7 +251,7 @@ const PaymentModal = ({
 
           {/* Pay in Person Notice */}
           {paymentMethod === "person" && (
-            <div className="border border-barber-gold bg-amber-50 p-4 rounded-lg">
+            <div className="border border-accent/50 bg-accent/5 p-4 rounded-lg">
               <h3 className="font-medium text-lg mb-3 pb-2 border-b border-amber-200">
                 Pay in Person
               </h3>
@@ -273,11 +270,17 @@ const PaymentModal = ({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+          <Button
+            variant="outline"
+            onClick={onClose}
+            disabled={isSubmitting}
+            className="hover:bg-gray-200"
+          >
             Back to Form
           </Button>
+
           <Button
-            className="bg-barber-gold hover:bg-amber-400 text-black"
+            className="bg-accent hover:bg-amber-300 text-black"
             onClick={handleSubmit}
             disabled={(paymentMethod === "bank" && !receipt) || isSubmitting}
           >

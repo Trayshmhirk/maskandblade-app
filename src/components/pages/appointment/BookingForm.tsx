@@ -8,6 +8,13 @@ import { toast } from "sonner";
 import PaymentModal from "@/components/modals/PaymentModal";
 import { serviceCategories as serviceData } from "@/lib/data/serviceCategories";
 import SuccessMessage from "./SuccessMessage";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const flattenServices = () =>
   serviceData.flatMap((category: any) =>
@@ -39,9 +46,7 @@ const BookingForm = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -217,22 +222,25 @@ const BookingForm = () => {
                   >
                     Service
                   </label>
-                  <select
-                    id="serviceId"
-                    name="serviceId"
+
+                  <Select
                     value={formData.serviceId}
-                    onChange={handleChange}
-                    required
-                    className="form-select w-full rounded-md border border-input bg-background px-3 pr-6 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, serviceId: value }))
+                    }
                   >
-                    <option value="">Select a service</option>
-                    {flattenServices().map((service) => (
-                      <option key={service.id} value={service.id}>
-                        {service.categoryName} – {service.name} ({service.price}
-                        )
-                      </option>
-                    ))}
-                  </select>
+                    <SelectTrigger className="w-full h-10">
+                      <SelectValue placeholder="Choose a service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {flattenServices().map((service) => (
+                        <SelectItem key={service.id} value={service.id}>
+                          {service.categoryName} – {service.name} (
+                          {service.price})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="mb-4">
@@ -292,7 +300,7 @@ const BookingForm = () => {
 
                 <Button
                   type="submit"
-                  className="w-full bg-barber-gold hover:bg-amber-400 text-black"
+                  className="w-full bg-accent hover:bg-amber-300 text-black"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Processing..." : "Proceed to Payment"}

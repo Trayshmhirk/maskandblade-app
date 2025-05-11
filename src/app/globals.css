@@ -150,14 +150,12 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(217, 119, 6, 0.1);
-  /* amber-500 with opacity */
+  background-color: #e5e7eb;
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(217, 119, 6, 0.218);
-  /* amber-500 with more opacity */
+  background-color: #d1d5dc;
 }
 
 @layer base {

@@ -31,7 +31,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} font-inter ${bebasNeue.variable} font-bebas-neue`}
     >
-      <body cz-shortcut-listen="false">
+      <body suppressHydrationWarning={true}>
         <Suspense>
           <Toaster richColors position="top-right" />
           {children}

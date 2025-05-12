@@ -1,19 +1,31 @@
-import React from "react";
-import Footer from "@/components/common/Footer";
-import Header from "@/components/common/Header";
+"use client";
+import React, { useState } from "react";
+import CustomerSidebar from "@/components/common/CustomerSidebar";
+import CustomerTopbar from "@/components/common/CustomerTopbar";
 
-const CustomerLayout = ({
+export default function CustomerDashboardLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) => {
+}) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div>
-      <Header />
-      {children}
-      <Footer />
+    <div className="min-h-screen flex">
+      {/* Sidebar */}
+      <CustomerSidebar
+        sidebarOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+
+      {/* Main Content */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <CustomerTopbar onMenuClick={() => setSidebarOpen(true)} />
+
+        <main className="flex-1 overflow-y-auto px-5 py-6 pb-8">
+          {children}
+        </main>
+      </div>
     </div>
   );
-};
-
-export default CustomerLayout;
+}

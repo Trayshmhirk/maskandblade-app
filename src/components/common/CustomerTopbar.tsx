@@ -13,17 +13,17 @@ export default function CustomerTopbar({ onMenuClick }: CustomerTopbarProps) {
   return (
     <header className="bg-white shadow-sm py-3 px-4 flex items-center justify-between sticky top-0 z-10">
       {/* Left: Mobile menu button */}
-      <div className="flex items-center lg:hidden">
+      <div className="flex items-center slg:hidden">
         <button
           onClick={onMenuClick}
-          className="lg:hidden hover:bg-gray-200 text-gray-700 hover:text-gray-900 p-1 rounded-md cursor-pointer"
+          className="slg:hidden hover:bg-gray-200 text-gray-700 hover:text-gray-900 p-1 rounded-md cursor-pointer"
         >
           <AlignJustify className="size-5" />
         </button>
       </div>
 
       {/* search bar */}
-      <div className="flex-1 mx-6 lg:mx-0">
+      <div className="flex-1 mx-6 slg:mx-0">
         <div className="relative w-full max-w-md">
           <input
             type="text"
@@ -36,7 +36,7 @@ export default function CustomerTopbar({ onMenuClick }: CustomerTopbarProps) {
 
       {/* notification/profile dropdown */}
       <div className="flex items-center space-x-4">
-        <button className="relative p-2 rounded-full hover:bg-gray-100 transition-all duration-300">
+        <button className="relative p-2 rounded-full hover:bg-gray-100 transition-all duration-300 cursor-pointer">
           <Bell size={20} className="text-gray-600" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>

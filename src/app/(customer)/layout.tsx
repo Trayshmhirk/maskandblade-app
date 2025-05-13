@@ -11,7 +11,7 @@ export default function CustomerDashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* Sidebar */}
       <CustomerSidebar
         sidebarOpen={sidebarOpen}
@@ -22,7 +22,7 @@ export default function CustomerDashboardLayout({
       <div className="flex flex-1 flex-col overflow-hidden">
         <CustomerTopbar onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="flex-1 overflow-y-auto px-6 py-10 pb-8">
+        <main className="flex-1 overflow-y-auto px-6 py-10 pb-12">
           {children}
         </main>
       </div>

@@ -15,6 +15,8 @@ import {
 import { toast } from "sonner";
 import { Appointment } from "@/interface/appointments";
 import AddEditAppointmentModal from "@/components/modals/AddEditAppointmentModal";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const CustomerAppointments = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -248,17 +250,17 @@ const CustomerAppointments = () => {
   return (
     <>
       <header className="mb-10">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 dark:text-white flex items-center gap-2">
-          <Calendar size={28} className="text-accent" />
+        <h1 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white flex items-center gap-2">
+          <Calendar size={26} className="text-accent" />
           My Appointments
         </h1>
         <p className="text-gray-600 dark:text-gray-300">Manage appointments</p>
       </header>
 
       <div className="max-w-5xl">
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-col gap-7">
           {/* Calendar */}
-          <div className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
+          <div className="w-full h-fit max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                 {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
@@ -266,7 +268,7 @@ const CustomerAppointments = () => {
               <div className="flex space-x-2">
                 <button
                   onClick={handlePrevMonth}
-                  className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
                 >
                   <ChevronLeft
                     size={20}
@@ -275,7 +277,7 @@ const CustomerAppointments = () => {
                 </button>
                 <button
                   onClick={handleNextMonth}
-                  className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
                 >
                   <ChevronRight
                     size={20}
@@ -300,7 +302,7 @@ const CustomerAppointments = () => {
           </div>
 
           {/* Selected Date Appointments */}
-          <div className="w-full max-w-sm bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
+          <div className="w-full bg-white dark:bg-gray-800 p-6 pb-7 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
                 {selectedDate.toLocaleDateString("en-US", {
@@ -309,57 +311,67 @@ const CustomerAppointments = () => {
                   day: "numeric",
                 })}
               </h2>
-              <button
+              <Button
                 onClick={handleAddAppointment}
-                className="p-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center"
+                className="size-10 p-2 bg-gradient-to-r from-amber-300 to-amber-500 text-white rounded-md hover:from-amber-400 hover:to-amber-600 transition-colors duration-300 flex items-center"
               >
-                <Plus size={18} />
-              </button>
+                <Plus strokeWidth={2.5} size={20} className="size-5" />
+              </Button>
             </div>
 
             {filteredAppointments.length === 0 ? (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                No appointments scheduled for this date.
+              <div className="flex flex-col gap-6 items-center mb-5">
+                <Image
+                  src="/empty_data_icon.svg"
+                  alt="empty data icon"
+                  width={300}
+                  height={400}
+                  className="object-cover"
+                />
+
+                <div className="text-center text-gray-500 dark:text-gray-400">
+                  No appointments scheduled for this date.
+                </div>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="flex flex-wrap gap-5">
                 {filteredAppointments.map((appointment) => (
                   <div
                     key={appointment.id}
-                    className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+                    className="relative p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
                   >
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-semibold text-gray-800 dark:text-white">
+                    <div className="mb-7">
+                      <h3 className="font-semibold text-gray-800 dark:text-white mb-3">
                         {appointment.visitorName}
                       </h3>
-                      <div className="flex space-x-2">
-                        <button
-                          onClick={() => handleEditAppointment(appointment)}
-                          className="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
-                        >
-                          <Edit size={16} />
-                        </button>
-                        <button
-                          onClick={() =>
-                            handleDeleteAppointment(appointment.id)
-                          }
-                          className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors duration-200"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+
+                      <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-1">
+                        <Clock size={14} className="mr-1" />
+                        {appointment.time}
+                      </div>
+                      <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-1">
+                        <Bookmark size={14} className="mr-1" />
+                        {appointment.purpose}
+                      </div>
+                      <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
+                        <User size={14} className="mr-1" />
+                        Host: {appointment.host}
                       </div>
                     </div>
-                    <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-1">
-                      <Clock size={14} className="mr-1" />
-                      {appointment.time}
-                    </div>
-                    <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-1">
-                      <Bookmark size={14} className="mr-1" />
-                      {appointment.purpose}
-                    </div>
-                    <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
-                      <User size={14} className="mr-1" />
-                      Host: {appointment.host}
+
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        onClick={() => handleEditAppointment(appointment)}
+                        className="w-full bg-accent hover:bg-amber-300 text-primary transition-colors duration-200"
+                      >
+                        Reschedule
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteAppointment(appointment.id)}
+                        className="w-full bg-transparent hover:bg-red-500/10 border border-red-400 text-red-500 transition-colors duration-200"
+                      >
+                        Cancel Appointment
+                      </Button>
                     </div>
                   </div>
                 ))}

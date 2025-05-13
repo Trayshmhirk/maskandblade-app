@@ -22,7 +22,7 @@ export default function CustomerDashboardLayout({
       <div className="flex flex-1 flex-col overflow-hidden">
         <CustomerTopbar onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="flex-1 overflow-y-auto px-5 py-6 pb-8">
+        <main className="flex-1 overflow-y-auto px-6 py-10 pb-8">
           {children}
         </main>
       </div>

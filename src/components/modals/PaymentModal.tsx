@@ -9,7 +9,6 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Upload, Check, CreditCard, User } from "lucide-react";
-import { toast } from "sonner";
 import Image from "next/image";
 import { serviceCategories } from "@/lib/data/serviceCategories";
 

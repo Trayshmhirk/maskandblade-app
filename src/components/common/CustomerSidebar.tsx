@@ -35,7 +35,7 @@ export default function CustomerSidebar({
       {/* Overlay for mobile */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-black/50 transition-opacity backdrop-blur-[2px] slg:hidden",
+          "fixed inset-0 z-20 bg-black/50 transition-opacity backdrop-blur-[2px] slg:hidden",
           sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
         onClick={onClose}
@@ -44,7 +44,7 @@ export default function CustomerSidebar({
       {/* Sidebar Panel */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-white border-r border-gray-300 transition-transform transform slg:static slg:translate-x-0",
+          "fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-white border-r border-gray-300 transition-transform transform slg:static slg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >

@@ -17,6 +17,7 @@ import { Appointment } from "@/interface/appointments";
 import AddEditAppointmentModal from "@/components/modals/AddEditAppointmentModal";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import EmptyData from "@/components/common/EmptyData";
 
 const CustomerAppointments = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -320,19 +321,7 @@ const CustomerAppointments = () => {
             </div>
 
             {filteredAppointments.length === 0 ? (
-              <div className="flex flex-col gap-6 items-center mb-5">
-                <Image
-                  src="/empty_data_icon.svg"
-                  alt="empty data icon"
-                  width={300}
-                  height={400}
-                  className="object-cover"
-                />
-
-                <div className="text-center text-gray-500 dark:text-gray-400">
-                  No appointments scheduled for this date.
-                </div>
-              </div>
+              <EmptyData message=" No appointments scheduled for this date." />
             ) : (
               <div className="flex flex-wrap gap-5">
                 {filteredAppointments.map((appointment) => (

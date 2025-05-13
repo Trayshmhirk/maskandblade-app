@@ -20,3 +20,25 @@ export const bookingSchema = yup.object().shape({
   location: yup.string().required("Location is required"),
   notes: yup.string().optional(),
 });
+
+// customer appointment validation form
+export const appointmentSchema = yup.object({
+  visitorName: yup
+    .string()
+    .required("Name is required")
+    .min(2, "Name is too short"),
+  purpose: yup
+    .string()
+    .required("Purpose is required")
+    .min(2, "Purpose is too short"),
+  host: yup.string().required("Host is required").min(2, "Host is too short"),
+  time: yup.string().required("Time is required"),
+  notes: yup.string().optional(),
+  email: yup.string().required("Email is required").email("Invalid email"),
+  phone: yup
+    .string()
+    .required("Phone is required")
+    .min(10, "Phone is too short"),
+});
+
+export type AppointmentFormValues = yup.InferType<typeof appointmentSchema>;

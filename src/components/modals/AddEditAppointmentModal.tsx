@@ -1,7 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Appointment } from "@/interface/appointments";
 import { X } from "lucide-react";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { appointmentSchema } from "@/validation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 interface AddEditAppointmentModalProps {
   setShowModal: (arg: boolean) => void;
@@ -12,6 +23,8 @@ interface AddEditAppointmentModalProps {
   selectedAppointment: Appointment | null;
 }
 
+export type AppointmentFormValues = Omit<Appointment, "id" | "date">;
+
 const AddEditAppointmentModal = ({
   setShowModal,
   modalMode,
@@ -20,19 +33,28 @@ const AddEditAppointmentModal = ({
   appointments,
   selectedAppointment,
 }: AddEditAppointmentModalProps) => {
-  const [formData, setFormData] = useState({
-    visitorName: "",
-    purpose: "",
-    host: "",
-    time: "",
-    notes: "",
-    email: "",
-    phone: "",
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(appointmentSchema),
+    defaultValues: {
+      visitorName: "",
+      purpose: "",
+      host: "",
+      time: "",
+      notes: "",
+      email: "",
+      phone: "",
+    },
   });
 
   useEffect(() => {
     if (modalMode === "edit" && selectedAppointment) {
-      setFormData({
+      reset({
         visitorName: selectedAppointment.visitorName,
         purpose: selectedAppointment.purpose,
         host: selectedAppointment.host,
@@ -42,59 +64,44 @@ const AddEditAppointmentModal = ({
         phone: selectedAppointment.phone,
       });
     }
-  }, [modalMode, selectedAppointment]);
+  }, [modalMode, selectedAppointment, reset]);
 
-  const handleFormChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = (data: AppointmentFormValues) => {
+    const appointmentData: Appointment = {
+      ...data,
+      date: selectedDate,
+      id:
+        modalMode === "edit" && selectedAppointment
+          ? selectedAppointment.id
+          : `a${Math.random().toString(36).substring(7)}`,
+    };
 
     if (modalMode === "add") {
-      const newAppointment: Appointment = {
-        id: `a${Date.now()}`,
-        ...formData,
-        date: selectedDate,
-      };
-      setAppointments([...appointments, newAppointment]);
-      toast.success("Appointment added successfully");
-    } else if (modalMode === "edit" && selectedAppointment) {
-      const updatedAppointments = appointments.map((appointment) =>
-        appointment.id === selectedAppointment.id
-          ? { ...appointment, ...formData }
-          : appointment
+      setAppointments([...appointments, appointmentData]);
+      toast.success("Appointment added");
+    } else if (modalMode === "edit") {
+      setAppointments(
+        appointments.map((appt) =>
+          appt.id === selectedAppointment?.id ? appointmentData : appt
+        )
       );
-      setAppointments(updatedAppointments);
-      toast.success("Appointment updated successfully");
+      toast.success("Appointment updated");
     }
 
     setShowModal(false);
+    reset();
   };
 
   return (
-    <>
-      <div className="fixed inset-0 bg-black/50 z-40 flex items-center justify-center" />
+    <Dialog open onOpenChange={setShowModal}>
+      <DialogContent className="sm:max-w-[calc(100%-3rem)] smd:max-w-lg md:max-w-[600px] max-h-[85vh] flex flex-col overflow-hidden">
+        <DialogHeader>
+          <DialogTitle>
+            {modalMode === "add" ? "Add New Appointment" : "Edit Appointment"}
+          </DialogTitle>
+        </DialogHeader>
 
-      <div className="relative w-full max-w-lg bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-        <button
-          onClick={() => setShowModal(false)}
-          className="absolute top-4 right-4 text-gray-600 cursor-pointer"
-        >
-          <X size={20} />
-        </button>
-
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-          {modalMode === "add" ? "Add New Appointment" : "Edit Appointment"}
-        </h2>
-
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -102,12 +109,15 @@ const AddEditAppointmentModal = ({
               </label>
               <input
                 type="text"
-                name="visitorName"
-                value={formData.visitorName}
-                onChange={handleFormChange}
+                placeholder="Visitor Name"
+                {...register("visitorName")}
                 className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                required
               />
+              {errors.visitorName && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.visitorName.message}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -117,26 +127,31 @@ const AddEditAppointmentModal = ({
                 </label>
                 <input
                   type="text"
-                  name="purpose"
-                  value={formData.purpose}
-                  onChange={handleFormChange}
+                  placeholder="Purpose"
+                  {...register("purpose")}
                   className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                  required
                 />
+                {errors.purpose && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.purpose.message}
+                  </p>
+                )}
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Time
                 </label>
                 <input
-                  type="text"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleFormChange}
-                  placeholder="e.g. 09:30 AM"
+                  type="time"
+                  {...register("time")}
                   className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                  required
                 />
+                {errors.time && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.time.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -146,12 +161,15 @@ const AddEditAppointmentModal = ({
               </label>
               <input
                 type="text"
-                name="host"
-                value={formData.host}
-                onChange={handleFormChange}
+                placeholder="Host"
+                {...register("host")}
                 className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                required
               />
+              {errors.host && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.host.message}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -161,11 +179,15 @@ const AddEditAppointmentModal = ({
                 </label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleFormChange}
+                  placeholder="Email"
+                  {...register("email")}
                   className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -173,11 +195,15 @@ const AddEditAppointmentModal = ({
                 </label>
                 <input
                   type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleFormChange}
+                  placeholder="Phone"
+                  {...register("phone")}
                   className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
                 />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.phone.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -185,10 +211,10 @@ const AddEditAppointmentModal = ({
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Notes
               </label>
+
               <textarea
-                name="notes"
-                value={formData.notes}
-                onChange={handleFormChange}
+                placeholder="Notes"
+                {...register("notes")}
                 className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
                 rows={3}
               ></textarea>
@@ -211,8 +237,8 @@ const AddEditAppointmentModal = ({
             </div>
           </div>
         </form>
-      </div>
-    </>
+      </DialogContent>
+    </Dialog>
   );
 };
 

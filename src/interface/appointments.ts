@@ -5,7 +5,7 @@ export interface Appointment {
   host: string;
   time: string;
   date: Date;
-  notes: string;
+  notes?: string;
   email: string;
   phone: string;
 }

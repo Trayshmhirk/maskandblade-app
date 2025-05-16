@@ -8,16 +8,13 @@ import {
   ChevronLeft,
   ChevronRight,
   Plus,
-  X,
-  Edit,
-  Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Appointment } from "@/interface/appointments";
 import AddEditAppointmentModal from "@/components/modals/AddEditAppointmentModal";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import EmptyData from "@/components/common/EmptyData";
+import RenderCalendarDays from "./RenderCalendarDays";
 
 const CustomerAppointments = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -29,15 +26,6 @@ const CustomerAppointments = () => {
     useState<Appointment | null>(null);
 
   const [loading, setLoading] = useState(true);
-
-  // Generate calendar days
-  const getDaysInMonth = (year: number, month: number) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
-
-  const getFirstDayOfMonth = (year: number, month: number) => {
-    return new Date(year, month, 1).getDay();
-  };
 
   useEffect(() => {
     // Simulate fetching appointments
@@ -138,17 +126,6 @@ const CustomerAppointments = () => {
     }
   };
 
-  // Build calendar
-  const daysInMonth = getDaysInMonth(
-    currentDate.getFullYear(),
-    currentDate.getMonth()
-  );
-
-  const firstDayOfMonth = getFirstDayOfMonth(
-    currentDate.getFullYear(),
-    currentDate.getMonth()
-  );
-
   const monthNames = [
     "January",
     "February",
@@ -172,72 +149,6 @@ const CustomerAppointments = () => {
       appointment.date.getMonth() === selectedDate.getMonth() &&
       appointment.date.getFullYear() === selectedDate.getFullYear()
   );
-
-  const renderCalendarDays = () => {
-    const days = [];
-
-    // Empty cells for days before the first day of the month
-    for (let i = 0; i < firstDayOfMonth; i++) {
-      days.push(<div key={`empty-${i}`} className="h-10 w-10"></div>);
-    }
-
-    // Cells for days in the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        day
-      );
-      const isToday =
-        date.getDate() === new Date().getDate() &&
-        date.getMonth() === new Date().getMonth() &&
-        date.getFullYear() === new Date().getFullYear();
-
-      const isSelected =
-        date.getDate() === selectedDate.getDate() &&
-        date.getMonth() === selectedDate.getMonth() &&
-        date.getFullYear() === selectedDate.getFullYear();
-
-      const hasAppointments = appointments.some(
-        (appointment) =>
-          appointment.date.getDate() === day &&
-          appointment.date.getMonth() === date.getMonth() &&
-          appointment.date.getFullYear() === date.getFullYear()
-      );
-
-      days.push(
-        <div
-          key={day}
-          className={`h-10 w-10 flex items-center justify-center font-medium rounded-full cursor-pointer transition-colors duration-300
-          ${isToday ? "bg-blue-100 dark:bg-blue-900/40" : ""}
-          ${
-            isSelected
-              ? "bg-blue-500 dark:bg-blue-600 text-white"
-              : "dark:hover:bg-gray-700"
-          }
-          ${
-            hasAppointments && !isSelected && !isToday
-              ? "bg-accent/30 text-black"
-              : ""
-          }
-          hover:bg-gray-200 `}
-          onClick={() => handleDateSelect(day)}
-        >
-          <span
-            className={`${
-              isSelected || isToday
-                ? "dark:text-white"
-                : "text-gray-800 dark:text-white"
-            }`}
-          >
-            {day}
-          </span>
-        </div>
-      );
-    }
-
-    return days;
-  };
 
   if (loading) {
     return (
@@ -299,7 +210,14 @@ const CustomerAppointments = () => {
               ))}
             </div>
 
-            <div className="grid grid-cols-7 gap-1">{renderCalendarDays()}</div>
+            <div className="grid grid-cols-7 gap-1">
+              <RenderCalendarDays
+                currentDate={currentDate}
+                selectedDate={selectedDate}
+                appointments={appointments}
+                handleDateSelect={handleDateSelect}
+              />
+            </div>
           </div>
 
           {/* Selected Date Appointments */}
@@ -351,7 +269,7 @@ const CustomerAppointments = () => {
                     <div className="flex flex-wrap gap-2">
                       <Button
                         onClick={() => handleEditAppointment(appointment)}
-                        className="w-full bg-accent hover:bg-amber-300 text-primary transition-colors duration-200"
+                        className="w-full bg-accent/70 hover:bg-amber-300 text-primary transition-colors duration-200"
                       >
                         Reschedule
                       </Button>

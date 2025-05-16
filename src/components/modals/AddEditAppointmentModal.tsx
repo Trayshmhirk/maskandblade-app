@@ -1,18 +1,27 @@
 import React, { useEffect } from "react";
 import { Appointment } from "@/interface/appointments";
-import { X } from "lucide-react";
 import { toast } from "sonner";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { appointmentSchema } from "@/validation";
+import { bookingSchema } from "@/validation";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { flattenServices } from "@/components/pages/appointment/BookingForm";
+import { Button } from "@/components/ui/button";
 
 interface AddEditAppointmentModalProps {
   setShowModal: (arg: boolean) => void;
@@ -23,7 +32,7 @@ interface AddEditAppointmentModalProps {
   selectedAppointment: Appointment | null;
 }
 
-export type AppointmentFormValues = Omit<Appointment, "id" | "date">;
+export type AppointmentFormValues = Omit<Appointment, "id">;
 
 const AddEditAppointmentModal = ({
   setShowModal,
@@ -36,32 +45,34 @@ const AddEditAppointmentModal = ({
   const {
     register,
     handleSubmit,
-    setValue,
+    control,
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(appointmentSchema),
+    resolver: yupResolver(bookingSchema),
     defaultValues: {
-      visitorName: "",
-      purpose: "",
-      host: "",
-      time: "",
-      notes: "",
+      name: "",
       email: "",
       phone: "",
+      date: "",
+      time: "",
+      location: "",
+      serviceId: selectedAppointment?.serviceId,
+      notes: "",
     },
   });
 
   useEffect(() => {
     if (modalMode === "edit" && selectedAppointment) {
       reset({
-        visitorName: selectedAppointment.visitorName,
-        purpose: selectedAppointment.purpose,
-        host: selectedAppointment.host,
-        time: selectedAppointment.time,
-        notes: selectedAppointment.notes,
+        name: selectedAppointment.name,
         email: selectedAppointment.email,
         phone: selectedAppointment.phone,
+        date: selectedAppointment.date,
+        time: selectedAppointment.time,
+        location: selectedAppointment.location,
+        serviceId: selectedAppointment.serviceId,
+        notes: selectedAppointment.notes,
       });
     }
   }, [modalMode, selectedAppointment, reset]);
@@ -69,7 +80,7 @@ const AddEditAppointmentModal = ({
   const onSubmit = (data: AppointmentFormValues) => {
     const appointmentData: Appointment = {
       ...data,
-      date: selectedDate,
+      date: String(selectedDate),
       id:
         modalMode === "edit" && selectedAppointment
           ? selectedAppointment.id
@@ -94,7 +105,7 @@ const AddEditAppointmentModal = ({
 
   return (
     <Dialog open onOpenChange={setShowModal}>
-      <DialogContent className="sm:max-w-[calc(100%-3rem)] smd:max-w-lg md:max-w-[600px] max-h-[85vh] flex flex-col overflow-hidden">
+      <DialogContent className="sm:max-w-[calc(100%-3rem)] smd:max-w-lg md:max-w-[600px] max-h-[85vh] bg-white flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle>
             {modalMode === "add" ? "Add New Appointment" : "Edit Appointment"}
@@ -105,35 +116,29 @@ const AddEditAppointmentModal = ({
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Visitor Name
+                Name
               </label>
-              <input
+              <Input
                 type="text"
                 placeholder="Visitor Name"
-                {...register("visitorName")}
-                className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
+                {...register("name")}
               />
-              {errors.visitorName && (
+              {errors.name && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.visitorName.message}
+                  {errors.name.message}
                 </p>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Purpose
+                  Preferred Date
                 </label>
-                <input
-                  type="text"
-                  placeholder="Purpose"
-                  {...register("purpose")}
-                  className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                />
-                {errors.purpose && (
+                <Input type="date" {...register("date")} />
+                {errors.date && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.purpose.message}
+                    {errors.date.message}
                   </p>
                 )}
               </div>
@@ -142,11 +147,7 @@ const AddEditAppointmentModal = ({
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Time
                 </label>
-                <input
-                  type="time"
-                  {...register("time")}
-                  className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                />
+                <Input type="time" {...register("time")} />
                 {errors.time && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.time.message}
@@ -155,33 +156,50 @@ const AddEditAppointmentModal = ({
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Host
+            {/* Service Select */}
+            <div className="mb-4">
+              <label
+                htmlFor="serviceId"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Service
               </label>
-              <input
-                type="text"
-                placeholder="Host"
-                {...register("host")}
-                className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
+
+              <Controller
+                control={control}
+                name="serviceId"
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="w-full h-10">
+                      <SelectValue placeholder="Choose a service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {flattenServices().map((service) => (
+                        <SelectItem key={service.id} value={String(service.id)}>
+                          {service.categoryName} - {service.name} (
+                          {service.price})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
               />
-              {errors.host && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.host.message}
+              {errors.serviceId && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.serviceId.message}
                 </p>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Email
                 </label>
-                <input
+                <Input
                   type="email"
                   placeholder="Email"
                   {...register("email")}
-                  className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
                 />
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-1">
@@ -189,16 +207,12 @@ const AddEditAppointmentModal = ({
                   </p>
                 )}
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Phone
                 </label>
-                <input
-                  type="text"
-                  placeholder="Phone"
-                  {...register("phone")}
-                  className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                />
+                <Input type="text" placeholder="Phone" {...register("phone")} />
                 {errors.phone && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.phone.message}
@@ -212,29 +226,33 @@ const AddEditAppointmentModal = ({
                 Notes
               </label>
 
-              <textarea
-                placeholder="Notes"
+              <Textarea
+                placeholder="Any specific requests?"
                 {...register("notes")}
-                className="w-full p-2 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
-                rows={3}
-              ></textarea>
+                className="w-full min-h-[120px]"
+              />
             </div>
 
-            <div className="flex justify-end space-x-3 mt-6">
-              <button
-                type="button"
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-lg transition-all duration-200"
-              >
-                {modalMode === "add" ? "Add Appointment" : "Update Appointment"}
-              </button>
-            </div>
+            <DialogFooter>
+              <div className="flex justify-end space-x-3 mt-6">
+                <Button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  type="submit"
+                  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-lg transition-all duration-200"
+                >
+                  {modalMode === "add"
+                    ? "Add Appointment"
+                    : "Update Appointment"}
+                </Button>
+              </div>
+            </DialogFooter>
           </div>
         </form>
       </DialogContent>

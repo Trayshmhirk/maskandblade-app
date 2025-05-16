@@ -31,50 +31,54 @@ const CustomerAppointments = () => {
     // Simulate fetching appointments
     const timer = setTimeout(() => {
       // Sample appointment data
-      const sampleAppointments = [
+      const sampleAppointments: Appointment[] = [
         {
           id: "a1",
-          visitorName: "Alice Brown",
-          purpose: "Interview",
-          host: "HR Department",
+          name: "Signature Cut",
           time: "09:30 AM",
-          date: new Date(currentDate.getFullYear(), currentDate.getMonth(), 12),
+          date: String(
+            new Date(currentDate.getFullYear(), currentDate.getMonth(), 12)
+          ),
           notes: "Position: Marketing Manager",
           email: "alice@example.com",
           phone: "555-1234",
+          serviceId: "1",
+          location: "",
         },
         {
           id: "a2",
-          visitorName: "Mark Wilson",
-          purpose: "Client Meeting",
-          host: "Sales Team",
+          name: "Hair Design",
           time: "11:00 AM",
-          date: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+          date: String(
+            new Date(currentDate.getFullYear(), currentDate.getMonth(), 15)
+          ),
           notes: "Quarterly review",
           email: "mark@clientcompany.com",
           phone: "555-5678",
+          serviceId: "3",
+          location: "",
         },
         {
           id: "a3",
-          visitorName: "Sarah Johnson",
-          purpose: "Vendor Discussion",
-          host: "Procurement",
+          name: "Executive Refresh",
           time: "02:30 PM",
-          date: new Date(),
+          date: String(new Date()),
           notes: "Contract renewal",
           email: "sarah@vendor.com",
           phone: "555-9012",
+          serviceId: "7",
+          location: "",
         },
         {
           id: "a4",
-          visitorName: "David Lee",
-          purpose: "Training",
-          host: "IT Department",
+          name: "Royal Treatment",
           time: "10:00 AM",
-          date: new Date(),
+          date: String(new Date()),
           notes: "New system onboarding",
           email: "david@training.com",
           phone: "555-3456",
+          serviceId: "5",
+          location: "",
         },
       ];
 
@@ -143,12 +147,15 @@ const CustomerAppointments = () => {
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Filter appointments for the selected date
-  const filteredAppointments = appointments.filter(
-    (appointment) =>
-      appointment.date.getDate() === selectedDate.getDate() &&
-      appointment.date.getMonth() === selectedDate.getMonth() &&
-      appointment.date.getFullYear() === selectedDate.getFullYear()
-  );
+  const filteredAppointments = appointments.filter((appointment) => {
+    const appointmentDate = new Date(appointment.date);
+
+    return (
+      appointmentDate.getDate() === selectedDate.getDate() &&
+      appointmentDate.getMonth() === selectedDate.getMonth() &&
+      appointmentDate.getFullYear() === selectedDate.getFullYear()
+    );
+  });
 
   if (loading) {
     return (
@@ -249,7 +256,7 @@ const CustomerAppointments = () => {
                   >
                     <div className="mb-7">
                       <h3 className="font-semibold text-gray-800 dark:text-white mb-3">
-                        {appointment.visitorName}
+                        {appointment.name}
                       </h3>
 
                       <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-1">
@@ -258,11 +265,11 @@ const CustomerAppointments = () => {
                       </div>
                       <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-1">
                         <Bookmark size={14} className="mr-1" />
-                        {appointment.purpose}
+                        Service Name: {appointment.serviceId}
                       </div>
                       <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
                         <User size={14} className="mr-1" />
-                        Host: {appointment.host}
+                        Email: {appointment.email}
                       </div>
                     </div>
 

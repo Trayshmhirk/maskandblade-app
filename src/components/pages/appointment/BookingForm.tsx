@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { bookingSchema } from "@/validation";
 
-const flattenServices = () =>
+export const flattenServices = () =>
   serviceData.flatMap((category: any) =>
     category.services.map((service: any) => ({
       ...service,

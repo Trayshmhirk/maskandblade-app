@@ -58,12 +58,14 @@ const RenderCalendarDays = ({
       date.getMonth() === selectedDate.getMonth() &&
       date.getFullYear() === selectedDate.getFullYear();
 
-    const hasAppointments = appointments.some(
-      (appointment) =>
-        appointment.date.getDate() === day &&
-        appointment.date.getMonth() === date.getMonth() &&
-        appointment.date.getFullYear() === date.getFullYear()
-    );
+    const hasAppointments = appointments.some((appointment) => {
+      const appointmentDate = new Date(appointment.date);
+      return (
+        appointmentDate.getDate() === day &&
+        appointmentDate.getMonth() === date.getMonth() &&
+        appointmentDate.getFullYear() === date.getFullYear()
+      );
+    });
 
     days.push(
       <div

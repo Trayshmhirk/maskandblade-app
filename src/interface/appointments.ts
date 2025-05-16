@@ -1,11 +1,11 @@
 export interface Appointment {
   id: string;
-  visitorName: string;
-  purpose: string;
-  host: string;
-  time: string;
-  date: Date;
-  notes?: string;
+  name: string;
   email: string;
   phone: string;
+  date: string;
+  time: string;
+  location: string;
+  serviceId: string;
+  notes?: string;
 }

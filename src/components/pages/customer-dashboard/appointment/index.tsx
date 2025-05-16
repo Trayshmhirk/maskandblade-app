@@ -179,7 +179,7 @@ const CustomerAppointments = () => {
       <div className="max-w-5xl">
         <div className="flex flex-col gap-7">
           {/* Calendar */}
-          <div className="w-full h-fit max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
+          <div className="w-full h-fit max-w-md bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                 {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
@@ -206,7 +206,7 @@ const CustomerAppointments = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 mb-2">
+            <div className="grid grid-cols-7 gap-1.5 mb-2">
               {dayNames.map((day) => (
                 <div
                   key={day}
@@ -217,7 +217,7 @@ const CustomerAppointments = () => {
               ))}
             </div>
 
-            <div className="grid grid-cols-7 gap-1">
+            <div className="grid grid-cols-7 gap-1.5">
               <RenderCalendarDays
                 currentDate={currentDate}
                 selectedDate={selectedDate}
@@ -228,7 +228,7 @@ const CustomerAppointments = () => {
           </div>
 
           {/* Selected Date Appointments */}
-          <div className="w-full bg-white dark:bg-gray-800 p-6 pb-7 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
+          <div className="w-full bg-white dark:bg-gray-800 p-4 md:p-6 pb-5 md:pb-7 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 dark:border-gray-700">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
                 {selectedDate.toLocaleDateString("en-US", {
@@ -239,20 +239,20 @@ const CustomerAppointments = () => {
               </h2>
               <Button
                 onClick={handleAddAppointment}
-                className="size-10 p-2 bg-gradient-to-r from-amber-300 to-amber-500 text-white rounded-md hover:from-amber-400 hover:to-amber-600 transition-colors duration-300 flex items-center"
+                className="size-10 p-2 bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-400 hover:to-amber-600 text-white rounded-md transition-colors duration-300 flex items-center"
               >
                 <Plus strokeWidth={2.5} size={20} className="size-5" />
               </Button>
             </div>
 
             {filteredAppointments.length === 0 ? (
-              <EmptyData message=" No appointments scheduled for this date." />
+              <EmptyData message="No appointments scheduled for this date." />
             ) : (
-              <div className="flex flex-wrap gap-5">
+              <div className="grid smd:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredAppointments.map((appointment) => (
                   <div
                     key={appointment.id}
-                    className="relative p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+                    className="relative w-full p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
                   >
                     <div className="mb-7">
                       <h3 className="font-semibold text-gray-800 dark:text-white mb-3">

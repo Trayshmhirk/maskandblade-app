@@ -107,153 +107,146 @@ const AddEditAppointmentModal = ({
     <Dialog open onOpenChange={setShowModal}>
       <DialogContent className="sm:max-w-[calc(100%-3rem)] smd:max-w-lg md:max-w-[600px] max-h-[85vh] bg-white flex flex-col overflow-hidden">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="mb-2">
             {modalMode === "add" ? "Add New Appointment" : "Edit Appointment"}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Name
-              </label>
-              <Input
-                type="text"
-                placeholder="Visitor Name"
-                {...register("name")}
-              />
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Preferred Date
-                </label>
-                <Input type="date" {...register("date")} />
-                {errors.date && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.date.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Time
-                </label>
-                <Input type="time" {...register("time")} />
-                {errors.time && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.time.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Service Select */}
-            <div className="mb-4">
-              <label
-                htmlFor="serviceId"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Service
-              </label>
-
-              <Controller
-                control={control}
-                name="serviceId"
-                render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="w-full h-10">
-                      <SelectValue placeholder="Choose a service" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {flattenServices().map((service) => (
-                        <SelectItem key={service.id} value={String(service.id)}>
-                          {service.categoryName} - {service.name} (
-                          {service.price})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              {errors.serviceId && (
-                <p className="text-sm text-red-500 mt-1">
-                  {errors.serviceId.message}
-                </p>
-              )}
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Email
-                </label>
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Phone
-                </label>
-                <Input type="text" placeholder="Phone" {...register("phone")} />
-                {errors.phone && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.phone.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Notes
-              </label>
-
-              <Textarea
-                placeholder="Any specific requests?"
-                {...register("notes")}
-                className="w-full min-h-[120px]"
-              />
-            </div>
-
-            <DialogFooter>
-              <div className="flex justify-end space-x-3 mt-6">
-                <Button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
-                >
-                  Cancel
-                </Button>
-
-                <Button
-                  type="submit"
-                  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-lg transition-all duration-200"
-                >
-                  {modalMode === "add"
-                    ? "Add Appointment"
-                    : "Update Appointment"}
-                </Button>
-              </div>
-            </DialogFooter>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex-1 py-4 px-1 space-y-4 custom-scrollbar overflow-y-auto"
+        >
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Name
+            </label>
+            <Input
+              type="text"
+              placeholder="Visitor Name"
+              {...register("name")}
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            )}
           </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Preferred Date
+              </label>
+              <Input type="date" {...register("date")} />
+              {errors.date && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.date.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Time
+              </label>
+              <Input type="time" {...register("time")} />
+              {errors.time && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.time.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Service Select */}
+          <div className="mb-4">
+            <label
+              htmlFor="serviceId"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Service
+            </label>
+
+            <Controller
+              control={control}
+              name="serviceId"
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full h-10">
+                    <SelectValue placeholder="Choose a service" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {flattenServices().map((service) => (
+                      <SelectItem key={service.id} value={String(service.id)}>
+                        {service.categoryName} - {service.name} ({service.price}
+                        )
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.serviceId && (
+              <p className="text-sm text-red-500 mt-1">
+                {errors.serviceId.message}
+              </p>
+            )}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <Input type="email" placeholder="Email" {...register("email")} />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Phone
+              </label>
+              <Input type="text" placeholder="Phone" {...register("phone")} />
+              {errors.phone && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.phone.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Notes
+            </label>
+
+            <Textarea
+              placeholder="Any specific requests?"
+              {...register("notes")}
+              className="w-full min-h-[100px]"
+            />
+          </div>
+
+          <DialogFooter>
+            <div className="flex justify-end space-x-3 mt-6">
+              <Button
+                type="button"
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+              >
+                Cancel
+              </Button>
+
+              <Button
+                type="submit"
+                className="px-4 py-2 bg-gradient-to-r from-amber-300 to-amber-500 hover:from-amber-400 hover:to-amber-600 text-white rounded-lg transition-all duration-200"
+              >
+                {modalMode === "add" ? "Add Appointment" : "Update Appointment"}
+              </Button>
+            </div>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
